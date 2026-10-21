@@ -87,4 +87,20 @@ def add_movie(movie: Movie):
         conn.close()
 
 
+#Tar bort en film
+@app.delete("/movies/{movie_id}")
+def delete_movie(movie_id: int):
+    conn = sqlite3.connect(DB_PATH)
 
+    try:
+        conn.execute(
+            "DELETE FROM movies WHERE id = ?",
+            (movie_id,)
+        )
+
+        conn.commit()
+
+        return {"message": "Borttagning genomförd"}
+
+    finally:
+        conn.close()
