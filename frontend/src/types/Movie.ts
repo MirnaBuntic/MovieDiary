@@ -3,6 +3,6 @@ export interface Movie {
     title: string;
     genre: string;
     status: "watched" | "watchlist";
-    watchedDate: string | null;
+    watched_date: string | null;
     rating: number | null;
 }

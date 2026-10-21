@@ -17,7 +17,7 @@ function MovieList({ movies, title }: MovieListProps) {
 
                 {movie.status === "watched" && (
                     <>
-                        <p>Datum: {movie.watchedDate}</p>
+                        <p>Datum: {movie.watched_date}</p>
                         <p>Betyg: {movie.rating}/10</p>
                     </>
                 )}
