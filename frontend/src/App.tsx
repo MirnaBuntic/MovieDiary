@@ -4,10 +4,25 @@ import MovieList from "./components/MovieList";
 import MovieForm from "./components/MovieForm";
 import type { Movie } from "./types/Movie";
 
+// Genrer som användaren kan filtrera efter
+const genres = [
+  "Action",
+  "Komedi",
+  "Drama",
+  "Skräck",
+  "Sci-Fi",
+  "Thriller",
+  "Animation"
+];
+
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [activeFilter, setActiveFilter] = useState<"watched" | "watchlist">("watched");
   const [showForm, setShowForm] = useState(false);
+
+  // Genrefiltrering och sortering
+  const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
+  const [sortBy, setSortBy] = useState<"date" | "rating">("date");
 
   // Hämta alla filmer från backend
   useEffect(() => {
@@ -65,10 +80,38 @@ function App() {
     }
   }
 
-  // Filtrera filmer efter status
-  const filteredMovies = movies.filter(
-    (movie) => movie.status === activeFilter
-  );
+  // Markera eller avmarkera en genre
+  function toggleGenre(genre: string) {
+    if (selectedGenres.includes(genre)) {
+      setSelectedGenres(
+        selectedGenres.filter((item) => item !== genre)
+      );
+    } else {
+      setSelectedGenres([...selectedGenres, genre]);
+    }
+  }
+
+  // Filtrera efter status och valda genrer
+  const filteredMovies = movies.filter((movie) => {
+    const matchesStatus = movie.status === activeFilter;
+
+    const matchesGenre =
+      selectedGenres.length === 0 ||
+      selectedGenres.includes(movie.genre);
+
+    return matchesStatus && matchesGenre;
+  });
+
+  // Sortera endast filmer under "Har sett"
+  if (activeFilter === "watched") {
+    filteredMovies.sort((a, b) => {
+      if (sortBy === "date") {
+        return (b.watched_date ?? "").localeCompare(a.watched_date ?? "");
+      }
+
+      return (b.rating ?? -1) - (a.rating ?? -1);
+    });
+  }
 
   return (
     <>
@@ -94,6 +137,42 @@ function App() {
           </button>
         </nav>
 
+        {/* Genrefilter för båda flikarna */}
+        <section>
+          <h3>Filtrera efter genre</h3>
+
+          {genres.map((genre) => (
+            <label key={genre}>
+              <input
+                type="checkbox"
+                checked={selectedGenres.includes(genre)}
+                onChange={() => toggleGenre(genre)}
+              />
+              {genre}
+            </label>
+          ))}
+
+          <button onClick={() => setSelectedGenres([])}>
+            Rensa filter
+          </button>
+        </section>
+
+        {/* Sortering endast för sedda filmer */}
+        {activeFilter === "watched" && (
+          <label>
+            Sortera efter
+            <select
+              value={sortBy}
+              onChange={(event) =>
+                setSortBy(event.target.value as "date" | "rating")
+              }
+            >
+              <option value="date">Senast sedd</option>
+              <option value="rating">Högsta betyg</option>
+            </select>
+          </label>
+        )}
+
         <MovieList
           movies={filteredMovies}
           title={activeFilter === "watched" ? "Har sett" : "Vill se"}
@@ -101,7 +180,7 @@ function App() {
         />
       </main>
     </>
-  )
+  );
 }
 
 export default App;
