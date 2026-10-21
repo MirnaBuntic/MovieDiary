@@ -18,6 +18,16 @@ function App() {
     getMovies();
   }, []);
 
+  async function deleteMovie(id: number) {
+  const response = await fetch(`http://127.0.0.1:8000/movies/${id}`, {
+    method: "DELETE",
+  });
+
+  if (response.ok) {
+      setMovies(movies.filter((movie) => movie.id !== id));
+    }
+  }
+
   const filteredMovies = movies.filter(
     (movie) => movie.status === activeFilter
   );
@@ -40,6 +50,7 @@ function App() {
       <MovieList
         movies={filteredMovies}
         title={activeFilter === "watched" ? "Har sett" : "Vill se"}
+        onDelete={deleteMovie}
       />
     </main>
   )
