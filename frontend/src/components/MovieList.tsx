@@ -2,12 +2,13 @@ import type { Movie } from "../types/Movie";
 
 interface MovieListProps {
   movies: Movie[];
+  title: string;
 }
 
-function MovieList({ movies }: MovieListProps) {
+function MovieList({ movies, title }: MovieListProps) {
   return (
     <section>
-      <h2>Har sett</h2>
+      <h2>{title}</h2>
 
         {movies.map((movie) => (
             <article key={movie.id}>
