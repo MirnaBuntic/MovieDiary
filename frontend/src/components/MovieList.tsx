@@ -7,7 +7,7 @@ interface MovieListProps {
 function MovieList({ movies }: MovieListProps) {
   return (
     <section>
-      <h2>My Movies</h2>
+      <h2>Har sett</h2>
 
         {movies.map((movie) => (
             <article key={movie.id}>
