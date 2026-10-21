@@ -1,42 +1,36 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MovieList from "./components/MovieList";
 import type { Movie } from "./types/Movie";
 
-const movies: Movie[] = [
-  {
-    id:1,
-    title: "Spider-man: homecoming",
-    genre: "Action",
-    status: "watched",
-    watchedDate: "2026-07-7",
-    rating: 7,
-  },
-  {
-    id:2,
-    title: "Limitless",
-    genre: "Thriller",
-    status: "watched",
-    watchedDate: "2026-04-23",
-    rating: 8,
-  },
-  {
-    id:3,
-    title: "Scooby-Doo",
-    genre: "Animation",
-    status: "watchlist",
-    watchedDate: null,
-    rating: null,
-  }
-]
 
 function App() {
-  const [activeFilter, setActiveFilter] = useState<
-    "watched" | "watchlist"
-  >("watched")
+  const [movies, setMovies] = useState<Movie[]>([]);
+  const [activeFilter, setActiveFilter] = useState<"watched" | "watchlist">("watched");
+
+  useEffect(() => {
+    async function getMovies() {
+      const response = await fetch("http://127.0.0.1:8000/movies");
+      const data: Movie[] = await response.json();
+
+      setMovies(data);
+    }
+
+    getMovies();
+  }, []);
+
+  async function deleteMovie(id: number) {
+  const response = await fetch(`http://127.0.0.1:8000/movies/${id}`, {
+    method: "DELETE",
+  });
+
+  if (response.ok) {
+      setMovies(movies.filter((movie) => movie.id !== id));
+    }
+  }
 
   const filteredMovies = movies.filter(
     (movie) => movie.status === activeFilter
-  )
+  );
 
   return (
     <main>
@@ -56,6 +50,7 @@ function App() {
       <MovieList
         movies={filteredMovies}
         title={activeFilter === "watched" ? "Har sett" : "Vill se"}
+        onDelete={deleteMovie}
       />
     </main>
   )
