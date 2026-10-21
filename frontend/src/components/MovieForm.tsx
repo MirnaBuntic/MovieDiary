@@ -54,9 +54,9 @@ function MovieForm({ onAdd }: MovieFormProps) {
             onChange={(event) => setGenre(event.target.value)}
         >
             <option value="Action">Action</option>
-            <option value="Comedy">Komedi</option>
+            <option value="Komedi">Komedi</option>
             <option value="Drama">Drama</option>
-            <option value="Horror">Skräck</option>
+            <option value="Skräck">Skräck</option>
             <option value="Sci-Fi">Sci-Fi</option>
             <option value="Thriller">Thriller</option>
             <option value="Animation">Animation</option>
