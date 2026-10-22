@@ -1,30 +1,18 @@
-
 import { useEffect, useState } from "react";
 import MovieList from "./components/MovieList";
 import MovieForm from "./components/MovieForm";
+import MovieFilter from "./components/MovieFilter";
+import MovieSort from "./components/MovieSort";
 import type { Movie } from "./types/Movie";
-
-// Genrer som användaren kan filtrera efter
-const genres = [
-  "Action",
-  "Komedi",
-  "Drama",
-  "Skräck",
-  "Sci-Fi",
-  "Thriller",
-  "Animation"
-];
 
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [activeFilter, setActiveFilter] = useState<"watched" | "watchlist">("watched");
   const [showForm, setShowForm] = useState(false);
-
-  // Genrefiltrering och sortering
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState<"date" | "rating">("date");
 
-  // Hämta alla filmer från backend
+  //Hämta alla filmer
   useEffect(() => {
     async function getMovies() {
       const response = await fetch("http://127.0.0.1:8000/movies");
@@ -36,7 +24,7 @@ function App() {
     getMovies();
   }, []);
 
-  // Lägg till en film
+  //Lägg till en film
   async function addMovie(
     title: string,
     genre: string,
@@ -56,7 +44,7 @@ function App() {
         watched_date,
         rating,
       }),
-    });
+    })
 
     if (response.ok) {
       const newMovie: Movie = await response.json();
@@ -67,20 +55,20 @@ function App() {
     }
   }
 
-  // Ta bort en film
+  //Ta bort en film
   async function deleteMovie(id: number) {
     const response = await fetch(`http://127.0.0.1:8000/movies/${id}`, {
       method: "DELETE",
-    });
+    })
 
     if (response.ok) {
       setMovies((previousMovies) =>
         previousMovies.filter((movie) => movie.id !== id)
-      );
+      )
     }
   }
 
-  // Markera eller avmarkera en genre
+  //Markera eller avmarkera en genre
   function toggleGenre(genre: string) {
     if (selectedGenres.includes(genre)) {
       setSelectedGenres(
@@ -91,7 +79,7 @@ function App() {
     }
   }
 
-  // Filtrera efter status och valda genrer
+  //Filtrera efter status och valda genrer
   const filteredMovies = movies.filter((movie) => {
     const matchesStatus = movie.status === activeFilter;
 
@@ -100,9 +88,9 @@ function App() {
       selectedGenres.includes(movie.genre);
 
     return matchesStatus && matchesGenre;
-  });
+  })
 
-  // Sortera endast filmer under "Har sett"
+  //Sortera bara filmer under Har sett
   if (activeFilter === "watched") {
     filteredMovies.sort((a, b) => {
       if (sortBy === "date") {
@@ -110,7 +98,7 @@ function App() {
       }
 
       return (b.rating ?? -1) - (a.rating ?? -1);
-    });
+    })
   }
 
   return (
@@ -137,40 +125,19 @@ function App() {
           </button>
         </nav>
 
-        {/* Genrefilter för båda flikarna */}
-        <section>
-          <h3>Filtrera efter genre</h3>
+        {/* Genrefilter visas på båda flikarna */}
+        <MovieFilter
+          selectedGenres={selectedGenres}
+          onToggleGenre={toggleGenre}
+          onClear={() => setSelectedGenres([])}
+        />
 
-          {genres.map((genre) => (
-            <label key={genre}>
-              <input
-                type="checkbox"
-                checked={selectedGenres.includes(genre)}
-                onChange={() => toggleGenre(genre)}
-              />
-              {genre}
-            </label>
-          ))}
-
-          <button onClick={() => setSelectedGenres([])}>
-            Rensa filter
-          </button>
-        </section>
-
-        {/* Sortering endast för sedda filmer */}
+        {/* Sortering visas bara under "Har sett" */}
         {activeFilter === "watched" && (
-          <label>
-            Sortera efter
-            <select
-              value={sortBy}
-              onChange={(event) =>
-                setSortBy(event.target.value as "date" | "rating")
-              }
-            >
-              <option value="date">Senast sedd</option>
-              <option value="rating">Högsta betyg</option>
-            </select>
-          </label>
+          <MovieSort
+            sortBy={sortBy}
+            onSortChange={setSortBy}
+          />
         )}
 
         <MovieList
@@ -180,7 +147,7 @@ function App() {
         />
       </main>
     </>
-  );
+  )
 }
 
 export default App;

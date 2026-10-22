@@ -29,7 +29,7 @@ function MovieList({ movies, title, onDelete }: MovieListProps) {
         </article>
       ))}
     </section>
-  );
+  )
 }
 
 export default MovieList;
