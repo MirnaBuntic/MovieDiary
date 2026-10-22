@@ -105,7 +105,6 @@ function App() {
     <>
       <header>
         <h1>MovieDiary</h1>
-        <p>Min filmkatalog</p>
       </header>
 
       <main>
