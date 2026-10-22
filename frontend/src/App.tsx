@@ -108,18 +108,26 @@ function App() {
       </header>
 
       <main>
-        <button onClick={() => setShowForm(!showForm)}>
+        <button
+          className="add-movie-btn"
+          onClick={() => setShowForm(!showForm)}>
           {showForm ? "Avbryt" : "Lägg till ny film"}
         </button>
 
         {showForm && <MovieForm onAdd={addMovie} />}
 
         <nav>
-          <button onClick={() => setActiveFilter("watched")}>
+          <button
+            className={activeFilter === "watched" ? "active" : ""}
+            onClick={() => setActiveFilter("watched")}
+          >
             Har sett
           </button>
 
-          <button onClick={() => setActiveFilter("watchlist")}>
+          <button
+            className={activeFilter === "watchlist" ? "active" : ""}
+            onClick={() => setActiveFilter("watchlist")}
+          >
             Vill se
           </button>
         </nav>
