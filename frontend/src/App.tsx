@@ -67,6 +67,10 @@ function App() {
 
     //Om ok skapas en ny array med uppdaterade filmer
     if (response.ok) {
+      const data = await response.json();
+
+      console.log(data.message)
+
       setMovies((previousMovies) =>
         previousMovies.filter((movie) => movie.id !== id)
       )
