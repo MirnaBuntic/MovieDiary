@@ -26,6 +26,12 @@ main {
         border: none;
         background-color: v.$secondary-background-color;
         color: v.$third-text-color;
+
+        &.cancel-btn {
+            background-color: #383838;
+            color: v.$text-color;
+            padding: .4rem;
+        }
     }
 
     nav {
