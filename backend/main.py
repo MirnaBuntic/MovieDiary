@@ -21,11 +21,11 @@ app.add_middleware(
 )
 
 
-#Skapa databastabellen om den inte redan finns
+#Anropar funktionen så att databastabellen finns innan api börjar användas
 create_database()
 
 
-#Validera information som skickas till API:et
+#Validera information som skickas till API:et för att begränsa felaktig input
 class Movie(BaseModel):
     title: str
     genre: str
@@ -34,11 +34,13 @@ class Movie(BaseModel):
     rating: float | None = Field(default=None, ge=0, le=10)
 
 
+#Endpoints
+
 #Hämtar alla filmer
 @app.get("/movies")
 def get_movies():
     conn = sqlite3.connect(DB_PATH)
-    conn.row_factory = sqlite3.Row
+    conn.row_factory = sqlite3.Row #Retunerar row-object som gör det mer översiktligt istället för tuples
 
     try:
         movies = conn.execute(
@@ -47,6 +49,7 @@ def get_movies():
 
         return [dict(movie) for movie in movies]
 
+    #Databasanslutningarna stängs även om de skulle misslyckas
     finally:
         conn.close()
 
@@ -57,11 +60,12 @@ def add_movie(movie: Movie):
     conn = sqlite3.connect(DB_PATH)
 
     try:
+        # ? är en platshållare som skickar användarens värde separat från själva sql-koden
         cursor = conn.execute("""
             INSERT INTO movies (
                 title, genre, status, watched_date, rating
             )
-            VALUES (?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?) 
         """, (
             movie.title,
             movie.genre,
