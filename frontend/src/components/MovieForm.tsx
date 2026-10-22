@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+//Prop från app.tsx
 interface MovieFormProps {
   onAdd: (
     title: string,
@@ -18,8 +19,9 @@ function MovieForm({ onAdd }: MovieFormProps) {
   const [rating, setRating] = useState("");
 
   function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
-    event.preventDefault();
+    event.preventDefault() //För att skicka formuläret med fetch istället för att ladda om sidan
 
+    //Skickar infon till addMovie i app.tsx
     onAdd(
       title,
       genre,
@@ -28,6 +30,7 @@ function MovieForm({ onAdd }: MovieFormProps) {
       status === "watched" && rating !== "" ? Number(rating) : null
     );
 
+    //Tömmer formuläret
     setTitle("");
     setWatchedDate("");
     setRating("");

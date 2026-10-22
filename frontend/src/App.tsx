@@ -12,8 +12,9 @@ function App() {
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState<"date" | "rating">("date");
 
-  //Hämta alla filmer
+  //Hämta alla filmer när sidan öppnas
   useEffect(() => {
+    //async för att vänta på api utan att blockera webbläsaren
     async function getMovies() {
       const response = await fetch("http://127.0.0.1:8000/movies");
       const data: Movie[] = await response.json();
@@ -37,6 +38,7 @@ function App() {
       headers: {
         "Content-Type": "application/json",
       },
+      //Skapar ett js objekt som omvandlas till json
       body: JSON.stringify({
         title,
         genre,
@@ -46,9 +48,11 @@ function App() {
       }),
     })
 
+    //Om ok omvandlas svaret till ett js-objekt och sparas i variabeln newMovie och följer Movie interfacen
     if (response.ok) {
       const newMovie: Movie = await response.json();
 
+      //Uppdaterar filmlistan genom att kopiera de gamla filmerna och skapa en ny array
       setMovies((previousMovies) => [...previousMovies, newMovie]);
       setActiveFilter(status);
       setShowForm(false);
@@ -61,6 +65,7 @@ function App() {
       method: "DELETE",
     })
 
+    //Om ok skapas en ny array med uppdaterade filmer
     if (response.ok) {
       setMovies((previousMovies) =>
         previousMovies.filter((movie) => movie.id !== id)
@@ -97,6 +102,7 @@ function App() {
         return (b.watched_date ?? "").localeCompare(a.watched_date ?? "");
       }
 
+      //-1 För att filmer utan betyg ska hamna längst ner
       return (b.rating ?? -1) - (a.rating ?? -1);
     })
   }

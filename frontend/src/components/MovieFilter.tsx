@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 
 const genres = [
@@ -11,6 +10,7 @@ const genres = [
   "Animation"
 ]
 
+//Props som tas emot från app.tsx
 interface MovieFilterProps {
   selectedGenres: string[];
   onToggleGenre: (genre: string) => void;
