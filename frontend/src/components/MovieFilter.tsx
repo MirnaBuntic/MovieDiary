@@ -1,3 +1,6 @@
+
+import { useState } from "react";
+
 const genres = [
   "Action",
   "Komedi",
@@ -19,25 +22,48 @@ function MovieFilter({
   onToggleGenre,
   onClear
 }: MovieFilterProps) {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <section>
-      <h3>Filtrera efter genre</h3>
+    <div className="movie-filter">
+      <button
+        type="button"
+        className="movie-filter-btn"
+        onClick={() => setIsOpen(!isOpen)}
+        aria-expanded={isOpen}
+      >
+        <span className="genre-label">Genre</span>
 
-      {genres.map((genre) => (
-        <label key={genre}>
-          <input
-            type="checkbox"
-            checked={selectedGenres.includes(genre)}
-            onChange={() => onToggleGenre(genre)}
-          />
-          {genre}
-        </label>
-      ))}
+        <span className="genre-value">
+          {selectedGenres.length === 0
+            ? "Alla genrer"
+            : `${selectedGenres.length} genrer valda`}
 
-      <button onClick={onClear}>
-        Rensa filter
+          <i className="fa-solid fa-sliders" aria-hidden="true"></i>
+        </span>
       </button>
-    </section>
+
+      {isOpen && (
+        <div className="movie-filter-dropdown">
+          <h3>Välj genrer</h3>
+
+          {genres.map((genre) => (
+            <label key={genre}>
+              <input
+                type="checkbox"
+                checked={selectedGenres.includes(genre)}
+                onChange={() => onToggleGenre(genre)}
+              />
+              {genre}
+            </label>
+          ))}
+
+          <button type="button" onClick={onClear}>
+            Rensa filter
+          </button>
+        </div>
+      )}
+    </div>
   )
 }
 

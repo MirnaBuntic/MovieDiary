@@ -132,20 +132,23 @@ function App() {
           </button>
         </nav>
 
-        {/* Genrefilter visas på båda flikarna */}
-        <MovieFilter
-          selectedGenres={selectedGenres}
-          onToggleGenre={toggleGenre}
-          onClear={() => setSelectedGenres([])}
-        />
+        <div className="filter-container">
+          {/* Sortering visas bara under "Har sett" */}
+          {activeFilter === "watched" && (
+            <MovieSort
+              sortBy={sortBy}
+              onSortChange={setSortBy}
+            />
+          )}
 
-        {/* Sortering visas bara under "Har sett" */}
-        {activeFilter === "watched" && (
-          <MovieSort
-            sortBy={sortBy}
-            onSortChange={setSortBy}
+          {/* Genrefilter visas på båda flikarna */}
+          <MovieFilter
+            selectedGenres={selectedGenres}
+            onToggleGenre={toggleGenre}
+            onClear={() => setSelectedGenres([])}
           />
-        )}
+        </div>
+       
 
         <MovieList
           movies={filteredMovies}

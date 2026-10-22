@@ -1,0 +1,139 @@
+.filter-container {
+    display: flex;
+    justify-content: center;
+    gap: 3%;
+    padding: .6rem;
+    margin-top: .5rem;
+
+    .movie-sort, .movie-filter {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .movie-sort {
+        position: relative;
+
+        .movie-sort-btn {
+            display: block;
+            width: 100%;
+            padding: .7rem;
+            border: 1px solid #989898;
+            border-radius: 15px;
+            background-color: transparent;
+            color: inherit;
+            font-family: inherit;
+            text-align: left;
+            cursor: pointer;
+
+            .sort-label {
+                display: block;
+                font-size: .75rem;
+                margin-bottom: .5rem;
+            }
+
+            .sort-value {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 1rem;
+
+                i {
+                    font-size: 1rem;
+                }
+            }
+        }
+
+        .movie-sort-dropdown {
+            position: absolute;
+            top: calc(100% + .5rem);
+            left: 0;
+            width: 100%;
+            min-width: 170px;
+            box-sizing: border-box;
+            padding: .5rem;
+            border: 1px solid #989898;
+            border-radius: 15px;
+            background-color: #1e1e1e;
+            z-index: 10;
+
+            button {
+                display: block;
+                width: 100%;
+                padding: .7rem;
+                border: none;
+                border-radius: 8px;
+                background-color: transparent;
+                color: inherit;
+                text-align: left;
+                cursor: pointer;
+
+                &:first-child {
+                    border-bottom: 1px solid #555555;
+                    border-radius: 0;
+                }
+
+
+                &:hover {
+                    background-color: #383838;
+                }
+            }
+        }
+    }
+
+    .movie-filter {
+        position: relative;
+
+        .movie-filter-btn {
+            display: block;
+            width: 100%;
+            padding: .7rem;
+            border: 1px solid #989898;
+            border-radius: 15px;
+            background-color: transparent;
+            color: inherit;
+            font-family: inherit;
+            text-align: left;
+            cursor: pointer;
+
+            .genre-label {
+                display: block;
+                font-size: .75rem;
+                margin-bottom: .5rem;
+            }
+
+            .genre-value {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 1rem;
+
+                i {
+                    font-size: 1rem;
+                }
+            }
+        }
+
+        .movie-filter-dropdown {
+            position: absolute;
+            top: calc(100% + .5rem);
+            right: 0;
+            min-width: 200px;
+            padding: 1rem;
+            border: 1px solid #989898;
+            border-radius: 15px;
+            background-color: #1e1e1e;
+            z-index: 10;
+
+            h3 {
+                margin-top: 0;
+            }
+
+            label {
+                display: flex;
+                gap: .5rem;
+                margin-bottom: .75rem;
+            }
+        }
+    }
+}
+
