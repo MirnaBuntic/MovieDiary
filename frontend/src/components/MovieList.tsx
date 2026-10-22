@@ -1,3 +1,4 @@
+
 import type { Movie } from "../types/Movie";
 
 interface MovieListProps {
@@ -8,28 +9,42 @@ interface MovieListProps {
 
 function MovieList({ movies, title, onDelete }: MovieListProps) {
   return (
-    <section>
-      <h2>{title}</h2>
+    <section className="movie-list">
+      <div className="movie-list-header">
+        <h2>{title}</h2>
+        <span>{movies.length} {movies.length === 1 ? "film" : "filmer"}</span>
+      </div>
 
       {movies.map((movie) => (
-        <article key={movie.id}>
-          <h3>{movie.title}</h3>
-          <p>Genre: {movie.genre}</p>
+        <article className="movie-in-list" key={movie.id}>
+          <div className="movie-top">
+            <div className="movie-info">
+              <h3>{movie.title}</h3>
 
-          {movie.status === "watched" && (
-            <>
-              <p>Datum: {movie.watched_date}</p>
-              <p>Betyg: {movie.rating}/10</p>
-            </>
-          )}
+              <p>
+                {movie.genre}
+                {movie.status === "watched" && movie.watched_date && (
+                  <> · {movie.watched_date}</>
+                )}
+              </p>
+            </div>
 
-          <button onClick={() => onDelete(movie.id)}>
+            {movie.status === "watched" && movie.rating !== null && (
+              <span className="movie-rating">{movie.rating}/10</span>
+            )}
+          </div>
+
+          <button
+            className="movie-delete-btn"
+            onClick={() => onDelete(movie.id)}
+          >
+            <i className="fa-regular fa-trash-can" aria-hidden="true"></i>
             Ta bort
           </button>
         </article>
       ))}
     </section>
-  )
+  );
 }
 
 export default MovieList;

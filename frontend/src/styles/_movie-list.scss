@@ -1,0 +1,79 @@
+
+@use "variables" as v;
+
+.movie-list {
+    text-align: left;
+    padding: 1rem;
+
+    .movie-list-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+
+        h2 {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        span {
+            font-size: .75rem;
+            color: v.$secondary-text-color;
+        }
+    }
+
+    .movie-in-list {
+        display: flex;
+        flex-direction: column;
+        min-height: 110px;
+        padding: .8rem;
+        margin-bottom: .8rem;
+        border: 1px solid #383838;
+        border-radius: 12px;
+
+        .movie-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+
+            .movie-info {
+                h3 {
+                    margin: 0 0 .5rem;
+                    font-size: 1rem;
+                }
+
+                p {
+                    margin: 0;
+                    font-size: .8rem;
+                    color: v.$secondary-text-color;
+                }
+            }
+
+            .movie-rating {
+                font-weight: bold;
+                white-space: nowrap;
+            }
+        }
+
+        .movie-delete-btn {
+            align-self: flex-end;
+            margin-top: auto;
+            padding: .4rem .7rem;
+            border: 1px solid #383838;
+            border-radius: 25px;
+            background-color: transparent;
+            color: v.$text-color;
+            font-family: inherit;
+            cursor: pointer;
+
+            i {
+                margin-right: .3rem;
+            }
+
+            &:hover {
+                background-color: #383838;
+            }
+        }
+    }
+}
