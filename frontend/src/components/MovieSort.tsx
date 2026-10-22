@@ -1,6 +1,6 @@
-
 import { useState } from "react";
 
+//props från app.tsx
 interface MovieSortProps {
   sortBy: "date" | "rating";
   onSortChange: (sort: "date" | "rating") => void;

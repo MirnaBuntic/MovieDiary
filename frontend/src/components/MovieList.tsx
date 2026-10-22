@@ -1,6 +1,6 @@
-
 import type { Movie } from "../types/Movie";
 
+//Props från app.tsx
 interface MovieListProps {
   movies: Movie[];
   title: string;
