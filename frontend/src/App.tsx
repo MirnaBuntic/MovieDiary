@@ -111,7 +111,7 @@ function App() {
         <button
           className="add-movie-btn"
           onClick={() => setShowForm(!showForm)}>
-          {showForm ? "Avbryt" : "Lägg till ny film"}
+          {showForm ? "Avbryt" : "+ Lägg till ny film"}
         </button>
 
         {showForm && <MovieForm onAdd={addMovie} />}
