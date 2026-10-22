@@ -76,6 +76,7 @@ def add_movie(movie: Movie):
 
         conn.commit()
 
+        #Hämtar id från ny film
         movie_id = cursor.lastrowid
 
         return {
