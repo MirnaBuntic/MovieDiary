@@ -1,12 +1,12 @@
 @use "variables" as v;
 
 .add-movie-form {
-    margin: 1rem;
     padding: .8rem;
     border: 1px solid #383838;
     border-radius: 15px;
     background-color: v.$background-color;
     text-align: left;
+    margin-top: 1rem;
 
     h2 {
         margin: 0 0 1.5rem;
