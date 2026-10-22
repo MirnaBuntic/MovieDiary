@@ -1,23 +1,48 @@
+
+import { useState } from "react";
+
 interface MovieSortProps {
   sortBy: "date" | "rating";
   onSortChange: (sort: "date" | "rating") => void;
 }
 
 function MovieSort({ sortBy, onSortChange }: MovieSortProps) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  function handleSort(sort: "date" | "rating") {
+    onSortChange(sort);
+    setIsOpen(false);
+  }
+
   return (
-    <label>
-      Sortera efter
-      <select
-        value={sortBy}
-        onChange={(event) =>
-          onSortChange(event.target.value as "date" | "rating")
-        }
+    <div className="movie-sort">
+      <button
+        type="button"
+        className="movie-sort-btn"
+        onClick={() => setIsOpen(!isOpen)}
+        aria-expanded={isOpen}
       >
-        <option value="date">Senast sedd</option>
-        <option value="rating">Högsta betyg</option>
-      </select>
-    </label>
-  )
+        <span className="sort-label">Sortera efter</span>
+
+        <span className="sort-value">
+          {sortBy === "date" ? "Senast sedd" : "Högsta betyg"}
+          <i className="fa-solid fa-chevron-down" aria-hidden="true"></i>
+        </span>
+      </button>
+
+      {isOpen && (
+        <div className="movie-sort-dropdown">
+          <button type="button" onClick={() => handleSort("date")}>
+            Senast sedd
+          </button>
+
+          <button type="button" onClick={() => handleSort("rating")}>
+            Högsta betyg
+          </button>
+        </div>
+      )}
+    </div>
+  );
 }
 
 export default MovieSort;
