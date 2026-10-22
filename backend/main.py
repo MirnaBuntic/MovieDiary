@@ -1,6 +1,6 @@
 import sqlite3
 from typing import Literal
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from database import create_database, DB_PATH
@@ -98,14 +98,22 @@ def delete_movie(movie_id: int):
     conn = sqlite3.connect(DB_PATH)
 
     try:
-        conn.execute(
+        cursor = conn.execute(
             "DELETE FROM movies WHERE id = ?",
             (movie_id,)
+        )
+
+        #Detta la jag till eftersom jag märkte att meddelandet om att borttagningen genomfördes retunerades även om id som försökte tas bort inte fanns.
+        if cursor.rowcount == 0:
+            raise HTTPException(
+                status_code=404,
+                detail="Filmen hittades inte"
         )
 
         conn.commit()
 
         return {"message": "Borttagning genomförd"}
+    
 
     finally:
         conn.close()
