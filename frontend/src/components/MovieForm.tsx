@@ -84,6 +84,7 @@ function MovieForm({ onAdd }: MovieFormProps) {
                 type="date"
                 value={watchedDate}
                 onChange={(event) => setWatchedDate(event.target.value)}
+                onClick={(e) => e.currentTarget.showPicker()}
             />
           </label>
 
