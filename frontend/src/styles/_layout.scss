@@ -6,3 +6,40 @@ body {
     color: v.$text-color;
     font-family: v.$font-family;
 }
+
+header {
+    margin-bottom: 2rem;
+}
+
+main {
+    .add-movie-btn {
+        width: 95%;
+        padding: .8rem;
+        font-size: large;
+        border-radius: 25px;
+        border: none;
+        background-color: v.$secondary-background-color;
+        color: v.$third-text-color;
+    }
+
+    nav {
+        margin-top: 1rem;
+        display: flex;
+        gap: 3%;
+        justify-content: center;
+
+        button {
+            width: 46%;
+            border-radius: 25px;
+            padding: .5rem;
+            border: 1px solid #989898;
+            background-color: v.$background-color;
+
+            &.active {
+                background-color: #383838;
+                border: none;
+                font-weight: bold;
+            }
+        }
+    }
+}
