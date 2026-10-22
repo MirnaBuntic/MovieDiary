@@ -1,0 +1,65 @@
+@use "variables" as v;
+
+.add-movie-form {
+    margin: 1rem;
+    padding: .8rem;
+    border: 1px solid #383838;
+    border-radius: 15px;
+    background-color: v.$background-color;
+    text-align: left;
+
+    h2 {
+        margin: 0 0 1.5rem;
+        font-size: 1.2rem;
+    }
+
+    label {
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+        margin-bottom: 1rem;
+        font-size: .85rem;
+    }
+
+    input,
+    select {
+        width: 100%;
+        box-sizing: border-box;
+        padding: .8rem;
+        padding-right: 0;
+        border: 1px solid #989898;
+        border-radius: 10px;
+        background-color: #1e1e1e;
+        color: v.$text-color;
+        font-family: inherit;
+        font-size: 1rem;
+
+        &:focus {
+            outline: 2px solid #aaaaaa;
+            outline-offset: 2px;
+        }
+    }
+
+    select {
+        option {
+            padding: 5rem;
+        }
+    }
+
+    input[type="date"] {
+        color-scheme: dark;
+    }
+
+    button {
+        width: 100%;
+        padding: 1rem;
+        border: none;
+        border-radius: 25px;
+        background-color: v.$secondary-background-color;
+        color: v.$third-text-color;
+        font-family: inherit;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+    }
+}

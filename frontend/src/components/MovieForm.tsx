@@ -34,7 +34,7 @@ function MovieForm({ onAdd }: MovieFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="add-movie-form" onSubmit={handleSubmit}>
       <h2>Lägg till en film</h2>
 
       <label>
