@@ -17,8 +17,10 @@ header {
 }
 
 main {
+    padding: 1rem;
+
     .add-movie-btn {
-        width: 95%;
+        width: 100%;
         padding: .8rem;
         font-size: large;
         font-weight: bold;
@@ -41,7 +43,7 @@ main {
         justify-content: center;
 
         button {
-            width: 46%;
+            width: 50%;
             border-radius: 25px;
             padding: .5rem;
             border: 1px solid #989898;
